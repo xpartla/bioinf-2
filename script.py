@@ -8,7 +8,7 @@ HYDROPATHY_INDEX = {
     'M': 1.9, 'F': 2.8, 'P': -1.6, 'S': -0.8,
     'T': -0.7, 'W': -0.9, 'Y': -1.3, 'V': 4.2
 }
-DEFAULT_WINDOW_SIZE = 6
+DEFAULT_WINDOW_SIZE = 20
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Hydropathy plotter')
@@ -46,18 +46,18 @@ def calculate_hydropathy(sequence, window_size):
 
 
 def plot_hydropathy(sequence, hydropathy, threshold):
-    positions = range(len(sequence))
+    pos = range(len(sequence))
 
     plt.figure(figsize=(12, 6))
-    plt.plot(positions, hydropathy, label="Hydropathy", color='blue')
-    plt.axhline(threshold, color='red', linestyle='--', label=f'Threshold = {threshold}')
+    plt.plot(pos, hydropathy, label="Hydropathy", color='green')
+    plt.axhline(threshold, color='orange', linestyle='--', label=f'Threshold = {threshold}')
 
     for i, value in enumerate(hydropathy):
         if value >= threshold:
-            plt.axvspan(i - 0.5, i + 0.5, color='orange', alpha=0.3)
+            plt.axvspan(i - 0.5, i + 0.5, color='red', alpha=0.2)
 
-    plt.title("Kyte-Doolittle Hydropathy Plot")
-    plt.xlabel("Amino Acid Position")
+    plt.title(f"Hydropathy plot - window size: {window_size}")
+    plt.xlabel("Residue Number")
     plt.ylabel("Hydropathy")
     plt.legend()
     plt.grid(True)
